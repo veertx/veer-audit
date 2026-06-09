@@ -1,0 +1,27 @@
+{
+  "name": "veer-audit",
+  "version": "0.1.0",
+  "description": "Open-source, local-first AI security audit agent that produces a private and a sanitized public report.",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "veer-audit": "src/run.js"
+  },
+  "main": "src/run.js",
+  "scripts": {
+    "audit": "node src/run.js",
+    "start": "node src/run.js"
+  },
+  "keywords": [
+    "security",
+    "audit",
+    "sast",
+    "secrets",
+    "local-first",
+    "privacy"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Scan outputs and generated reports — never commit these.
+results/
+reports/
+
+# Real target config stays private; only the example is committed.
+config/target.json
+
+# Keep the directory placeholders.
+!results/.gitkeep
+!reports/.gitkeep
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log

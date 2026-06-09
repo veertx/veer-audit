@@ -1,0 +1,34 @@
+# veer-audit — weekly scheduled run examples
+# ---------------------------------------------------------------------------
+
+# --- Option A: cron --------------------------------------------------------
+# Run every Monday at 03:00 local time. Adjust the path to your checkout.
+# Logs append to results/cron.log.
+#
+#   0 3 * * 1  cd /path/to/veer-audit && /usr/bin/node src/run.js >> results/cron.log 2>&1
+#
+# Install with:  crontab -e   (then paste the line above)
+
+
+# --- Option B: PM2 ecosystem ----------------------------------------------
+# Save as ecosystem.config.js and run:  pm2 start ecosystem.config.js
+#
+# module.exports = {
+#   apps: [
+#     {
+#       name: 'veer-audit',
+#       script: 'src/run.js',
+#       interpreter: 'node',
+#       cwd: '/path/to/veer-audit',
+#       autorestart: false,        // it is a batch job, not a daemon
+#       cron_restart: '0 3 * * 1', // weekly, Monday 03:00
+#       out_file: 'results/pm2-out.log',
+#       error_file: 'results/pm2-err.log',
+#     },
+#   ],
+# };
+
+
+# --- Option C: Windows Task Scheduler -------------------------------------
+# schtasks /Create /SC WEEKLY /D MON /TR "node C:\path\to\veer-audit\src\run.js" ^
+#          /ST 03:00 /TN "veer-audit-weekly"

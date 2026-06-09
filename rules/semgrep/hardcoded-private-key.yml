@@ -1,0 +1,30 @@
+# Flag hardcoded private/secret key material near privateKey / secretKey assignments.
+# Hardcoded keys are a critical leak: they end up in git history and shipped bundles.
+# Recommend loading from a secret manager or environment, never literals in source.
+rules:
+  - id: hardcoded-private-key
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: >-
+      Possible hardcoded private/secret key assigned to a privateKey/secretKey
+      identifier. Hardcoded key material is a critical secret leak. Load keys from a
+      secret manager or environment variable; never commit literals.
+    metadata:
+      category: security
+      cwe: "CWE-798: Use of Hard-coded Credentials"
+      confidence: MEDIUM
+    patterns:
+      - pattern-either:
+          - pattern: $K = "..."
+          - pattern: $K = '...'
+          - pattern: $OBJ.$K = "..."
+          - pattern: const $K = "..."
+          - pattern: let $K = "..."
+          - pattern: var $K = "..."
+      - metavariable-regex:
+          metavariable: $K
+          regex: (?i).*(private_?key|secret_?key|signing_?key|priv_?key|keypair_?secret).*
+      - metavariable-pattern:
+          metavariable: $K
+          patterns:
+            - pattern-not-regex: (?i).*(path|file|name|id|env|ref|url).*

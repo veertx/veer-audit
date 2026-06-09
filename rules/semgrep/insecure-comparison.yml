@@ -1,0 +1,24 @@
+# Flag use of == / != to compare tokens, signatures, or secrets.
+# Non-constant-time comparison of secret material is vulnerable to timing attacks.
+# Recommend crypto.timingSafeEqual (Node) or an equivalent constant-time compare.
+rules:
+  - id: insecure-secret-comparison
+    languages: [javascript, typescript]
+    severity: WARNING
+    message: >-
+      Possible non-constant-time comparison of a token, signature, or secret using
+      == / != / === / !==. This is vulnerable to timing attacks. Use a constant-time
+      comparison such as crypto.timingSafeEqual().
+    metadata:
+      category: security
+      cwe: "CWE-208: Observable Timing Discrepancy"
+      confidence: MEDIUM
+    patterns:
+      - pattern-either:
+          - pattern: $A == $B
+          - pattern: $A != $B
+          - pattern: $A === $B
+          - pattern: $A !== $B
+      - metavariable-regex:
+          metavariable: $A
+          regex: (?i).*(token|signature|sig|secret|hmac|mac|digest|hash|apikey|api_key|password|passwd|pwd).*
