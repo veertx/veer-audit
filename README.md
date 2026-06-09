@@ -43,15 +43,49 @@ small, explicit allowlist of files for logic-level issues using the locked
 
 ### 1. Install the scanners
 
-Install whichever you want; missing ones are skipped gracefully.
+Install whichever you want — official installs only. Any missing tool is simply
+marked **SKIPPED** in the report; the agent still runs.
+
+**semgrep** (static analysis)
 
 ```bash
-# macOS (Homebrew) — examples; see each tool's docs for your platform
-brew install semgrep gitleaks trivy
-brew install osv-scanner    # or: go install github.com/google/osv-scanner/cmd/osv-scanner@latest
+pip install semgrep
+# Windows: semgrep runs best via WSL or pipx — use:
+pipx install semgrep
 ```
 
-`npm audit` ships with Node.js and needs no install.
+**gitleaks** (secret scanning)
+
+```bash
+winget install gitleaks          # Windows
+brew install gitleaks            # macOS
+# Linux: https://github.com/gitleaks/gitleaks/releases
+```
+
+**osv-scanner** (dependency CVEs)
+
+```bash
+winget install Google.OSVScanner # Windows (if missing in winget, see releases below)
+brew install osv-scanner         # macOS
+# Linux / releases: https://github.com/google/osv-scanner/releases
+```
+
+**trivy** (configuration / IaC — **OPTIONAL**)
+
+```bash
+brew install trivy               # macOS
+# Other platforms / releases: https://github.com/aquasecurity/trivy/releases
+```
+
+Then verify they're on your PATH:
+
+```bash
+semgrep --version
+gitleaks version
+osv-scanner --version
+```
+
+`npm audit` ships with Node.js and needs no install (used as a dependency-scan fallback).
 
 ### 2. Configure your target
 
