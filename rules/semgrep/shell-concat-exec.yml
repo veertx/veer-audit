@@ -1,0 +1,26 @@
+# Flag string concatenation built into a shell exec call.
+# Concatenating untrusted input into a shell string enables command injection.
+# Recommend execFile / spawn with an argument array, and never build shell strings.
+rules:
+  - id: shell-concat-exec
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: >-
+      Command string appears to be built via string concatenation or template
+      interpolation and passed to a shell execution function. This enables command
+      injection. Use child_process.execFile() or spawn() with an arguments array, and
+      avoid shell:true.
+    metadata:
+      category: security
+      cwe: "CWE-78: OS Command Injection"
+      confidence: MEDIUM
+    patterns:
+      - pattern-either:
+          - pattern: exec($CMD + $X, ...)
+          - pattern: exec(`...${$X}...`, ...)
+          - pattern: execSync($CMD + $X, ...)
+          - pattern: execSync(`...${$X}...`, ...)
+          - pattern: $CP.exec($CMD + $X, ...)
+          - pattern: $CP.exec(`...${$X}...`, ...)
+          - pattern: $CP.execSync($CMD + $X, ...)
+          - pattern: $CP.execSync(`...${$X}...`, ...)

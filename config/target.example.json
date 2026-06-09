@@ -1,0 +1,23 @@
+{
+  "name": "ProjectName",
+  "path": "../your-project",
+  "exclude": ["node_modules", "dist", ".git"],
+  "componentMap": {
+    "src/server": "backend",
+    "src/api": "backend",
+    "src/web": "frontend",
+    "src/ui": "frontend"
+  },
+  "llm": {
+    "enabled": false,
+    "provider": "none",
+    "model": "",
+    "fileAllowlist": []
+  },
+  "context": {
+    "publicDescription": "What the project is, in one or two sentences. Used as the intro of the public report.",
+    "auditedDependencies": [
+      "e.g. builds on Privacy Cash ZK pools (independently audited)"
+    ]
+  }
+}
