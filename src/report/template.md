@@ -1,7 +1,9 @@
 <!--
 Shared report skeleton for veer-audit.
 Placeholders are filled by src/report/private.js and src/report/public.js.
-Tokens: {{TITLE}} {{DATE}} {{INTRO}} {{SUMMARY}} {{FINDINGS}} {{SCOPE_NOTE}}
+Placeholder tokens (do NOT list them with braces in this comment, or the
+single-pass string replace would substitute here first): TITLE, DATE, INTRO,
+SUMMARY, FINDINGS, SCOPE_NOTE.
 -->
 # {{TITLE}}
 
