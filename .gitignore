@@ -5,8 +5,9 @@ node_modules/
 results/
 reports/
 
-# Real target config stays private; only the example is committed.
+# Real configs stay private; only the *.example.json files are committed.
 config/target.json
+config/triage.json
 
 # Keep the directory placeholders.
 !results/.gitkeep

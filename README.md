@@ -114,6 +114,10 @@ Outputs land in:
 See `schedule/veer-audit.cron.example` for a weekly cron line and a PM2 ecosystem
 example.
 
+## Example report
+
+See [`examples/veertx-2026-06-10-public.md`](examples/veertx-2026-06-10-public.md) — a real public report generated against VeerTx, with deduplication and triage statuses.
+
 ## The privacy model
 
 - **Your code never leaves your machine.** Scanners run locally; there is no telemetry
