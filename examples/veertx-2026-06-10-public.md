@@ -1,6 +1,6 @@
-# VeerTx — Public Security Report
+# VeerTx - Public Security Report
 
-_Generated 2026-06-10 by veer-audit — local-first automated security audit._
+_Generated 2026-06-10 by veer-audit - local-first automated security audit._
 
 VeerTx is a non-custodial privacy payment relay on Solana and Base. It generates shareable pay links that route payments through stealth addresses so sender and receiver wallets are never linked on-chain.
 
@@ -12,7 +12,7 @@ automated local scanning.
 
 ## Summary
 
-**Open posture — unresolved findings (lead with this):**
+**Open posture - unresolved findings (lead with this):**
 
 | Severity | Open |
 | --- | --- |
@@ -23,7 +23,7 @@ automated local scanning.
 | info | 0 |
 | **total open** | **18** |
 
-**All findings — including triaged (resolved / accepted / legacy / false positive):**
+**All findings - including triaged (resolved / accepted / legacy / false positive):**
 
 | Severity | All |
 | --- | --- |
@@ -83,7 +83,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** open
 - **Occurrences:** 1
-- **Summary:** postcss — GHSA-qx2v-qp2m-jg93
+- **Summary:** postcss - GHSA-qx2v-qp2m-jg93
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -93,7 +93,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** open
 - **Occurrences:** 1
-- **Summary:** qs — GHSA-q8mj-m7cp-5q26
+- **Summary:** qs - GHSA-q8mj-m7cp-5q26
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -103,7 +103,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** open
 - **Occurrences:** 3
-- **Summary:** uuid — GHSA-w5hq-g745-h8pq
+- **Summary:** uuid - GHSA-w5hq-g745-h8pq
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -113,7 +113,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** open
 - **Occurrences:** 5
-- **Summary:** ws — GHSA-58qx-3vcg-4xpx
+- **Summary:** ws - GHSA-58qx-3vcg-4xpx
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -123,7 +123,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** open
 - **Occurrences:** 1
-- **Summary:** @anthropic-ai/sdk — GHSA-p7fg-763f-g4gf
+- **Summary:** @anthropic-ai/sdk - GHSA-p7fg-763f-g4gf
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -133,7 +133,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** open
 - **Occurrences:** 1
-- **Summary:** ip-address — GHSA-v2v4-37r5-5v8g
+- **Summary:** ip-address - GHSA-v2v4-37r5-5v8g
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -143,7 +143,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** open
 - **Occurrences:** 1
-- **Summary:** qs — GHSA-q8mj-m7cp-5q26
+- **Summary:** qs - GHSA-q8mj-m7cp-5q26
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -153,7 +153,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** open
 - **Occurrences:** 2
-- **Summary:** uuid — GHSA-w5hq-g745-h8pq
+- **Summary:** uuid - GHSA-w5hq-g745-h8pq
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -163,7 +163,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** open
 - **Occurrences:** 3
-- **Summary:** ws — GHSA-58qx-3vcg-4xpx
+- **Summary:** ws - GHSA-58qx-3vcg-4xpx
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -203,7 +203,7 @@ automated local scanning.
 - **Severity:** low
 - **Status:** open
 - **Occurrences:** 1
-- **Summary:** elliptic — GHSA-848j-6mx2-7j84
+- **Summary:** elliptic - GHSA-848j-6mx2-7j84
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -213,7 +213,7 @@ automated local scanning.
 - **Severity:** low
 - **Status:** open
 - **Occurrences:** 1
-- **Summary:** elliptic — GHSA-848j-6mx2-7j84
+- **Summary:** elliptic - GHSA-848j-6mx2-7j84
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 
@@ -223,7 +223,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** accepted
 - **Occurrences:** 2
-- **Summary:** bigint-buffer — GHSA-3gc7-fjrx-p6mg
+- **Summary:** bigint-buffer - GHSA-3gc7-fjrx-p6mg
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Transitive dependency of the blockchain SDK; no patched version exists upstream. Low reachability; revisit on SDK upgrades.
@@ -234,7 +234,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** accepted
 - **Occurrences:** 1
-- **Summary:** bigint-buffer — GHSA-3gc7-fjrx-p6mg
+- **Summary:** bigint-buffer - GHSA-3gc7-fjrx-p6mg
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Transitive dependency of the blockchain SDK; no patched version exists upstream. Low reachability; revisit on SDK upgrades.
@@ -245,7 +245,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** legacy
 - **Occurrences:** 1
-- **Summary:** follow-redirects — GHSA-r4q5-vmmm-2653
+- **Summary:** follow-redirects - GHSA-r4q5-vmmm-2653
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Legacy frontend only; retired at migration.
@@ -278,7 +278,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-35jp-ww65-95wh
+- **Summary:** axios - GHSA-35jp-ww65-95wh
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -289,7 +289,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-3g43-6gmg-66jw
+- **Summary:** axios - GHSA-3g43-6gmg-66jw
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -300,7 +300,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-6chq-wfr3-2hj9
+- **Summary:** axios - GHSA-6chq-wfr3-2hj9
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -311,7 +311,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-777c-7fjr-54vf
+- **Summary:** axios - GHSA-777c-7fjr-54vf
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -322,7 +322,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-hfxv-24rg-xrqf
+- **Summary:** axios - GHSA-hfxv-24rg-xrqf
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -333,7 +333,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-j5f8-grm9-p9fc
+- **Summary:** axios - GHSA-j5f8-grm9-p9fc
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -344,7 +344,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-p92q-9vqr-4j8v
+- **Summary:** axios - GHSA-p92q-9vqr-4j8v
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -355,7 +355,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-pf86-5x62-jrwf
+- **Summary:** axios - GHSA-pf86-5x62-jrwf
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -366,7 +366,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-pjwm-pj3p-43mv
+- **Summary:** axios - GHSA-pjwm-pj3p-43mv
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -377,7 +377,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-pmwg-cvhr-8vh7
+- **Summary:** axios - GHSA-pmwg-cvhr-8vh7
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -388,7 +388,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-q8qp-cvcw-x6jj
+- **Summary:** axios - GHSA-q8qp-cvcw-x6jj
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -399,7 +399,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-3p68-rc4w-qgx5
+- **Summary:** axios - GHSA-3p68-rc4w-qgx5
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -410,7 +410,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-3w6x-2g7m-8v23
+- **Summary:** axios - GHSA-3w6x-2g7m-8v23
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -421,7 +421,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-445q-vr5w-6q77
+- **Summary:** axios - GHSA-445q-vr5w-6q77
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -432,7 +432,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-5c9x-8gcm-mpgx
+- **Summary:** axios - GHSA-5c9x-8gcm-mpgx
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -443,7 +443,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-62hf-57xw-28j9
+- **Summary:** axios - GHSA-62hf-57xw-28j9
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -454,7 +454,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-898c-q2cr-xwhg
+- **Summary:** axios - GHSA-898c-q2cr-xwhg
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -465,7 +465,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-fvcv-3m26-pcqx
+- **Summary:** axios - GHSA-fvcv-3m26-pcqx
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -476,7 +476,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-m7pr-hjqh-92cm
+- **Summary:** axios - GHSA-m7pr-hjqh-92cm
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -487,7 +487,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-vf2m-468p-8v99
+- **Summary:** axios - GHSA-vf2m-468p-8v99
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -498,7 +498,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-w9j2-pvgh-6h63
+- **Summary:** axios - GHSA-w9j2-pvgh-6h63
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -509,7 +509,7 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-xx6v-rp6x-q39c
+- **Summary:** axios - GHSA-xx6v-rp6x-q39c
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -520,7 +520,7 @@ automated local scanning.
 - **Severity:** low
 - **Status:** resolved
 - **Occurrences:** 1
-- **Summary:** axios — GHSA-xhjh-pmcv-23jw
+- **Summary:** axios - GHSA-xhjh-pmcv-23jw
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Dependency overridden to a patched version in the active frontend. Remaining occurrences are in the legacy frontend, retired at migration. The package is not present in the served bundle.
@@ -542,7 +542,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** false positive
 - **Occurrences:** 1
-- **Summary:** path-to-regexp — GHSA-j3q9-mxjg-w52f
+- **Summary:** path-to-regexp - GHSA-j3q9-mxjg-w52f
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Locked version is on the remediated major line; scanner range over-report.
@@ -553,7 +553,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** false positive
 - **Occurrences:** 1
-- **Summary:** tmp — GHSA-ph9p-34f9-6g65
+- **Summary:** tmp - GHSA-ph9p-34f9-6g65
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Locked version is already past the patched release; scanner range over-report.
@@ -564,7 +564,7 @@ automated local scanning.
 - **Severity:** high
 - **Status:** false positive
 - **Occurrences:** 1
-- **Summary:** underscore — GHSA-qpx9-hpmf-5gmw
+- **Summary:** underscore - GHSA-qpx9-hpmf-5gmw
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Locked version is already past the patched release; scanner range over-report.
@@ -619,14 +619,14 @@ automated local scanning.
 - **Severity:** medium
 - **Status:** false positive
 - **Occurrences:** 1
-- **Summary:** path-to-regexp — GHSA-27v5-c462-wpq7
+- **Summary:** path-to-regexp - GHSA-27v5-c462-wpq7
 - **Impact:** A known vulnerability in a third-party dependency could be exploited against the application.
 - **Recommendation:** Upgrade the affected dependency to a patched version and re-run dependency scanning.
 - **Note:** Locked version is on the remediated major line; scanner range over-report.
 
 ---
 
-> **Important — scope of this report.** This is automated, continuous security
+> **Important - scope of this report.** This is automated, continuous security
 > monitoring. It **complements but does not replace** a professional human security
 > audit. In particular, cryptographic and funds-handling code requires expert human
 > review that automated tooling cannot provide.
