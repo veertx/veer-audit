@@ -18,6 +18,7 @@ const semgrep = require('./scanners/semgrep');
 const gitleaks = require('./scanners/gitleaks');
 const osv = require('./scanners/osv');
 const trivy = require('./scanners/trivy');
+const { loadTriage } = require('./lib/findings');
 const privateReport = require('./report/private');
 const publicReport = require('./report/public');
 
@@ -117,18 +118,23 @@ function main() {
   const privateDir = path.join(ROOT, 'reports', 'private');
   const publicDir = path.join(ROOT, 'reports', 'public');
 
+  // Triage rules (config/triage.json) are optional and private; default = none.
+  const triage = loadTriage(ROOT);
+
   const privatePath = privateReport.build({
     findings: allFindings,
     scannerStatus,
     config,
     outDir: privateDir,
     date,
+    triage,
   });
   const publicPath = publicReport.build({
     findings: allFindings,
     config,
     outDir: publicDir,
     date,
+    triage,
   });
 
   console.log('\n[veer-audit] done.');

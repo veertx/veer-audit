@@ -7,8 +7,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { maskSecrets } = require('../lib/mask');
-
-const SEVERITY_ORDER = ['critical', 'high', 'medium', 'low', 'info'];
+const { SEVERITY_ORDER, dedupe, triageFor } = require('../lib/findings');
 
 function loadTemplate() {
   return fs.readFileSync(path.join(__dirname, 'template.md'), 'utf8');
@@ -22,15 +21,17 @@ function countBySeverity(findings) {
   return counts;
 }
 
-function renderSummary(findings, scannerStatus) {
+// Raw severity counts (true occurrence volume) + a unique-group line + scanners.
+function renderSummary(findings, groups, scannerStatus) {
   const counts = countBySeverity(findings);
   const lines = [];
-  lines.push('| Severity | Count |');
+  lines.push('| Severity | Count (raw) |');
   lines.push('| --- | --- |');
   for (const sev of SEVERITY_ORDER) {
     lines.push(`| ${sev} | ${counts[sev]} |`);
   }
-  lines.push(`| **total** | **${findings.length}** |`);
+  lines.push(`| **total raw** | **${findings.length}** |`);
+  lines.push(`| **unique findings (deduped)** | **${groups.length}** |`);
   lines.push('');
   lines.push('### Scanner status');
   lines.push('');
@@ -42,25 +43,33 @@ function renderSummary(findings, scannerStatus) {
   return lines.join('\n');
 }
 
-function renderFindings(findings) {
-  if (findings.length === 0) return '_No findings._';
+// One block per deduplicated group, highest severity first. Lists every file:line.
+function renderFindings(groups) {
+  if (!groups.length) return '_No findings._';
 
-  // Group by severity, highest first.
-  const sorted = [...findings].sort(
+  const sorted = [...groups].sort(
     (a, b) => SEVERITY_ORDER.indexOf(a.severity) - SEVERITY_ORDER.indexOf(b.severity)
   );
 
-  const blocks = sorted.map((f, i) => {
-    const loc = f.file ? `${f.file}${f.line ? `:${f.line}` : ''}` : 'n/a';
-    return [
-      `### ${i + 1}. ${maskSecrets(f.title)}`,
+  const blocks = sorted.map((g, i) => {
+    const lines = [
+      `### ${i + 1}. ${maskSecrets(g.title)}`,
       '',
-      `- **Severity:** ${f.severity}`,
-      `- **Category:** ${f.category}`,
-      `- **Source:** ${f.tool}`,
-      `- **Location:** \`${loc}\``,
-      `- **Detail:** ${maskSecrets(f.detail) || '_n/a_'}`,
-    ].join('\n');
+      `- **Severity:** ${g.severity}`,
+      `- **Category:** ${g.category}`,
+      `- **Component:** ${g.component}`,
+      `- **Source:** ${g.tool}`,
+      `- **Status:** ${String(g.triage.status).replace(/_/g, ' ')}`,
+      `- **Occurrences:** ${g.occurrences}`,
+      `- **Detail:** ${maskSecrets(g.detail) || '_n/a_'}`,
+      '- **Locations:**',
+    ];
+    for (const l of g.locations) {
+      const loc = l.file ? `${l.file}${l.line ? `:${l.line}` : ''}` : 'n/a';
+      lines.push(`  - \`${loc}\``);
+    }
+    if (g.triage.note) lines.push(`- **Note:** ${maskSecrets(g.triage.note)}`);
+    return lines.join('\n');
   });
 
   return blocks.join('\n\n');
@@ -68,11 +77,19 @@ function renderFindings(findings) {
 
 // findings: normalized finding objects.
 // scannerStatus: [{ name, status, note }]
-// config: target config (for the project name).
+// config: target config (project name + componentMap).
+// triage: parsed config/triage.json rules.
 // outDir / date: where + the date stamp.
-function build({ findings, scannerStatus, config, outDir, date }) {
+function build({ findings, scannerStatus, config, outDir, date, triage }) {
   const tpl = loadTemplate();
   const name = (config && config.name) || 'Project';
+  const componentMap = config && config.componentMap;
+
+  // Deduplicate, then attach triage status to each group.
+  const groups = dedupe(findings, componentMap).map((g) => ({
+    ...g,
+    triage: triageFor(g, triage),
+  }));
 
   const intro = [
     `**Project:** ${name}`,
@@ -92,8 +109,8 @@ function build({ findings, scannerStatus, config, outDir, date }) {
     .replace('{{TITLE}}', `${name} — Private Security Audit`)
     .replace('{{DATE}}', date)
     .replace('{{INTRO}}', intro)
-    .replace('{{SUMMARY}}', renderSummary(findings, scannerStatus))
-    .replace('{{FINDINGS}}', renderFindings(findings))
+    .replace('{{SUMMARY}}', renderSummary(findings, groups, scannerStatus))
+    .replace('{{FINDINGS}}', renderFindings(groups))
     .replace('{{SCOPE_NOTE}}', scopeNote);
 
   fs.mkdirSync(outDir, { recursive: true });

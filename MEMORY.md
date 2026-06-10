@@ -2,14 +2,19 @@
 
 ## Status
 
-**Scaffolded.** Full project structure and runnable skeleton in place (2026-06-10).
+**v1 complete (2026-06-10).** Local scanners + two-report generator, now with
+**deduplication + triage statuses**. **First real audit shipped** — run against VeerTx;
+sanitized public report published at `examples/veertx-2026-06-10-public.md`.
 
-**v1 scope:** local scanners + two-report generator.
+**v1 scope (delivered):** local scanners + two-report generator.
 - Runner shells out to `semgrep`, `gitleaks`, `osv-scanner`, `trivy` (optional),
   `npm audit` (fallback).
-- Normalizes findings to a common shape.
+- Normalizes findings, then **dedups** by (tool + rule/advisory id + component) with an
+  occurrence count.
+- **Triage** via private `config/triage.json` (gitignored): per-finding status
+  (open / accepted / legacy / resolved / false_positive) + public-safe note.
 - Emits a **private** report (paths + lines, secrets masked) and a **public** report
-  (sanitized: no code, no paths, no secrets, no tool names).
+  (sanitized: no code, no paths, no secrets, no tool names; open-posture-first summary).
 
 ## Next steps
 

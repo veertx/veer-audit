@@ -10,42 +10,29 @@
 //   - stack traces
 //   - tool / AI vendor names
 //
-// Findings are expressed as: category / component / severity / impact / recommendation.
+// Findings are deduplicated into category / component / severity / status /
+// occurrences / impact / recommendation entries.
 
 const fs = require('node:fs');
 const path = require('node:path');
 const { maskSecrets, genericizeTools } = require('../lib/mask');
-
-const SEVERITY_ORDER = ['critical', 'high', 'medium', 'low', 'info'];
+const {
+  SEVERITY_ORDER,
+  STATUS_ORDER,
+  componentFor,
+  dedupe,
+  triageFor,
+} = require('../lib/findings');
 
 function loadTemplate() {
-  return fs.readFileSync(path.join(__dirname, 'template.md'), 'utf8');
+  // Strip the leading HTML comment header so it never reaches rendered output —
+  // render from the template BODY only.
+  const raw = fs.readFileSync(path.join(__dirname, 'template.md'), 'utf8');
+  return raw.replace(/^<!--[\s\S]*?-->\s*/, '');
 }
 
-// Map a real file path to a GENERIC component name.
-// Uses config.componentMap (prefix match) when present, else a coarse heuristic.
-function componentFor(file, componentMap) {
-  if (!file) return 'application code';
-  const norm = String(file).replace(/\\/g, '/').toLowerCase();
-
-  if (componentMap) {
-    for (const prefix of Object.keys(componentMap)) {
-      if (norm.includes(prefix.replace(/\\/g, '/').toLowerCase())) {
-        return componentMap[prefix];
-      }
-    }
-  }
-
-  // Coarse fallback heuristics — never reveal the actual path.
-  if (/(server|api|backend|service|controller|route)/.test(norm)) return 'backend';
-  if (/(web|ui|frontend|client|component|page|view)/.test(norm)) return 'frontend';
-  if (/(package\.json|lock|deps|node_modules)/.test(norm)) return 'dependencies';
-  if (/(config|\.ya?ml|\.toml|dockerfile|\.tf)/.test(norm)) return 'configuration';
-  return 'application code';
-}
-
-// Derive a plain-language impact statement from category/severity.
-function impactFor(f) {
+// Derive a plain-language impact statement from category.
+function impactFor(group) {
   const map = {
     'Secret management':
       'A leaked credential could let an attacker access protected systems or data.',
@@ -56,11 +43,11 @@ function impactFor(f) {
     'SAST':
       'A code-level weakness could be exploited depending on how the affected path is reached.',
   };
-  return map[f.category] || 'This weakness could affect the security of the application.';
+  return map[group.category] || 'This weakness could affect the security of the application.';
 }
 
 // Derive a generic, non-leaking recommendation.
-function recommendationFor(f) {
+function recommendationFor(group) {
   const map = {
     'Secret management':
       'Rotate the affected credential, remove it from source and history, and load secrets from a manager or environment.',
@@ -71,55 +58,97 @@ function recommendationFor(f) {
     'SAST':
       'Review the flagged pattern and apply the secure coding practice for this issue class.',
   };
-  return map[f.category] || 'Review and remediate following secure development best practices.';
+  return map[group.category] || 'Review and remediate following secure development best practices.';
 }
 
-function countBySeverity(findings) {
+function statusLabel(status) {
+  return String(status).replace(/_/g, ' ');
+}
+
+function countBySeverity(groups) {
   const counts = { critical: 0, high: 0, medium: 0, low: 0, info: 0 };
-  for (const f of findings) if (counts[f.severity] != null) counts[f.severity] += 1;
+  for (const g of groups) if (counts[g.severity] != null) counts[g.severity] += 1;
   return counts;
 }
 
-function renderSummary(findings) {
-  const counts = countBySeverity(findings);
-  const lines = ['| Severity | Count |', '| --- | --- |'];
-  for (const sev of SEVERITY_ORDER) lines.push(`| ${sev} | ${counts[sev]} |`);
-  lines.push(`| **total** | **${findings.length}** |`);
+// Two views: OPEN-only counts first (honest posture), then ALL findings.
+// Counts are per deduplicated finding (group), not per raw occurrence.
+function renderSummary(groups) {
+  const openGroups = groups.filter((g) => g.triage.status === 'open');
+  const open = countBySeverity(openGroups);
+  const all = countBySeverity(groups);
+
+  const lines = [];
+  lines.push('**Open posture — unresolved findings (lead with this):**');
+  lines.push('');
+  lines.push('| Severity | Open |');
+  lines.push('| --- | --- |');
+  for (const sev of SEVERITY_ORDER) lines.push(`| ${sev} | ${open[sev]} |`);
+  lines.push(`| **total open** | **${openGroups.length}** |`);
+  lines.push('');
+  lines.push('**All findings — including triaged (resolved / accepted / legacy / false positive):**');
+  lines.push('');
+  lines.push('| Severity | All |');
+  lines.push('| --- | --- |');
+  for (const sev of SEVERITY_ORDER) lines.push(`| ${sev} | ${all[sev]} |`);
+  lines.push(`| **total** | **${groups.length}** |`);
   return lines.join('\n');
 }
 
-// Sanitize one finding into a publishable block. NO paths, NO code, NO tool names.
-function renderFinding(f, idx, componentMap) {
-  const component = componentFor(f.file, componentMap);
-  // Title is genericized + secret-masked; we deliberately drop f.detail (may carry
-  // code/paths) and synthesize impact/recommendation instead.
-  const title = genericizeTools(maskSecrets(f.title || f.category));
-  return [
-    `### ${idx + 1}. ${f.category}`,
+// Sanitize one deduplicated group into a publishable block.
+function renderFinding(group, idx) {
+  const isDependency = group.category === 'Dependency vulnerability';
+
+  // GENERICIZER SCOPING: the tool/vendor scrubber corrupts dependency PACKAGE names
+  // (e.g. a package whose name contains a vendor word). So for Dependency
+  // vulnerability findings we mask secrets on the summary but DO NOT genericize it.
+  // Prose fields are always genericized + masked.
+  const rawSummary = group.title || group.category;
+  const summary = isDependency
+    ? maskSecrets(rawSummary)
+    : genericizeTools(maskSecrets(rawSummary));
+
+  const note = group.triage.note ? genericizeTools(maskSecrets(group.triage.note)) : '';
+
+  const lines = [
+    `### ${idx + 1}. ${group.category}`,
     '',
-    `- **Component:** ${component}`,
-    `- **Severity:** ${f.severity}`,
-    `- **Summary:** ${title}`,
-    `- **Impact:** ${impactFor(f)}`,
-    `- **Recommendation:** ${recommendationFor(f)}`,
-  ].join('\n');
+    `- **Component:** ${group.component}`,
+    `- **Severity:** ${group.severity}`,
+    `- **Status:** ${statusLabel(group.triage.status)}`,
+    `- **Occurrences:** ${group.occurrences}`,
+    `- **Summary:** ${summary}`,
+    `- **Impact:** ${genericizeTools(impactFor(group))}`,
+    `- **Recommendation:** ${genericizeTools(recommendationFor(group))}`,
+  ];
+  if (note) lines.push(`- **Note:** ${note}`);
+  return lines.join('\n');
 }
 
-function renderFindings(findings, componentMap) {
-  if (findings.length === 0) {
-    return '_No findings of note in this run._';
-  }
-  const sorted = [...findings].sort(
-    (a, b) => SEVERITY_ORDER.indexOf(a.severity) - SEVERITY_ORDER.indexOf(b.severity)
-  );
-  return sorted.map((f, i) => renderFinding(f, i, componentMap)).join('\n\n');
+// Sorted: open first, then accepted, legacy, then resolved/false_positive;
+// within a status, by severity.
+function renderFindings(groups) {
+  if (!groups.length) return '_No findings of note in this run._';
+  const sorted = [...groups].sort((a, b) => {
+    const sa = STATUS_ORDER.indexOf(a.triage.status);
+    const sb = STATUS_ORDER.indexOf(b.triage.status);
+    if (sa !== sb) return sa - sb;
+    return SEVERITY_ORDER.indexOf(a.severity) - SEVERITY_ORDER.indexOf(b.severity);
+  });
+  return sorted.map((g, i) => renderFinding(g, i)).join('\n\n');
 }
 
-function build({ findings, config, outDir, date }) {
+function build({ findings, config, outDir, date, triage }) {
   const tpl = loadTemplate();
   const name = (config && config.name) || 'Project';
   const ctx = (config && config.context) || {};
   const componentMap = config && config.componentMap;
+
+  // Deduplicate, then attach triage status to each group.
+  const groups = dedupe(findings, componentMap).map((g) => ({
+    ...g,
+    triage: triageFor(g, triage),
+  }));
 
   // Intro from config publicDescription + audited dependencies line.
   const introParts = [];
@@ -128,7 +157,9 @@ function build({ findings, config, outDir, date }) {
   }
   if (Array.isArray(ctx.auditedDependencies) && ctx.auditedDependencies.length) {
     introParts.push('');
-    introParts.push(`**Audited dependencies:** ${ctx.auditedDependencies.join('; ')}.`);
+    // Strip any trailing period before adding our own so we never double up ("audited..").
+    const deps = genericizeTools(maskSecrets(ctx.auditedDependencies.join('; '))).replace(/\.+\s*$/, '');
+    introParts.push(`**Audited dependencies:** ${deps}.`);
   }
   introParts.push('');
   introParts.push(
@@ -149,13 +180,14 @@ function build({ findings, config, outDir, date }) {
     .replace('{{TITLE}}', `${name} — Public Security Report`)
     .replace('{{DATE}}', date)
     .replace('{{INTRO}}', intro)
-    .replace('{{SUMMARY}}', renderSummary(findings))
-    .replace('{{FINDINGS}}', renderFindings(findings, componentMap))
+    .replace('{{SUMMARY}}', renderSummary(groups))
+    .replace('{{FINDINGS}}', renderFindings(groups))
     .replace('{{SCOPE_NOTE}}', scopeNote);
 
-  // Final safety net: run the WHOLE document through the genericizers + secret mask
-  // one more time so nothing leaks even if a builder path was missed.
-  md = genericizeTools(maskSecrets(md));
+  // Secret-mask safety net over the WHOLE document. NOTE: we intentionally do NOT
+  // blanket-genericize here — that pass corrupted dependency package names. The
+  // genericizer is applied per prose field above instead.
+  md = maskSecrets(md);
 
   fs.mkdirSync(outDir, { recursive: true });
   const outPath = path.join(outDir, `${date}-public.md`);

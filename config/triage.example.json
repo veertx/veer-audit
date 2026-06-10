@@ -1,0 +1,27 @@
+[
+  {
+    "match": { "summary_contains": "gcm-no-tag-length", "component": "backend" },
+    "status": "resolved",
+    "note": "Authenticated-decryption call sites now validate IV and auth-tag length and pin the tag length explicitly."
+  },
+  {
+    "match": { "summary_contains": "react-insecure-request" },
+    "status": "false_positive",
+    "note": "The flagged request targets an internal health endpoint on a private network segment, not user traffic."
+  },
+  {
+    "match": { "summary_contains": "underscore", "component": "dependencies" },
+    "status": "accepted",
+    "note": "Risk accepted: the affected utility runs only in a build-time script with trusted input."
+  },
+  {
+    "match": { "summary_contains": "jwt-decode-without-verify" },
+    "status": "legacy",
+    "note": "Lives in a deprecated code path scheduled for removal; no new traffic reaches it."
+  },
+  {
+    "match": { "summary_contains": "axios" },
+    "status": "open",
+    "note": "Dependency upgrade scheduled for the next maintenance window."
+  }
+]
