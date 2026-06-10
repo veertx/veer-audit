@@ -79,14 +79,14 @@ function renderSummary(groups) {
   const all = countBySeverity(groups);
 
   const lines = [];
-  lines.push('**Open posture — unresolved findings (lead with this):**');
+  lines.push('**Open posture - unresolved findings (lead with this):**');
   lines.push('');
   lines.push('| Severity | Open |');
   lines.push('| --- | --- |');
   for (const sev of SEVERITY_ORDER) lines.push(`| ${sev} | ${open[sev]} |`);
   lines.push(`| **total open** | **${openGroups.length}** |`);
   lines.push('');
-  lines.push('**All findings — including triaged (resolved / accepted / legacy / false positive):**');
+  lines.push('**All findings - including triaged (resolved / accepted / legacy / false positive):**');
   lines.push('');
   lines.push('| Severity | All |');
   lines.push('| --- | --- |');
@@ -170,14 +170,14 @@ function build({ findings, config, outDir, date, triage }) {
   const intro = introParts.join('\n');
 
   const scopeNote = [
-    '> **Important — scope of this report.** This is automated, continuous security',
+    '> **Important - scope of this report.** This is automated, continuous security',
     '> monitoring. It **complements but does not replace** a professional human security',
     '> audit. In particular, cryptographic and funds-handling code requires expert human',
     '> review that automated tooling cannot provide.',
   ].join('\n');
 
   let md = tpl
-    .replace('{{TITLE}}', `${name} — Public Security Report`)
+    .replace('{{TITLE}}', `${name} - Public Security Report`)
     .replace('{{DATE}}', date)
     .replace('{{INTRO}}', intro)
     .replace('{{SUMMARY}}', renderSummary(groups))

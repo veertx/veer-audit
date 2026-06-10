@@ -95,18 +95,18 @@ function build({ findings, scannerStatus, config, outDir, date, triage }) {
     `**Project:** ${name}`,
     '',
     'This is the **private** audit report. It contains file paths and line references',
-    'for your use. Secret values are masked. Do not publish this file — use the public',
+    'for your use. Secret values are masked. Do not publish this file - use the public',
     'report for sharing.',
   ].join('\n');
 
   const scopeNote = [
     '> **Scope:** This is automated, continuous monitoring. It complements but does',
-    '> **not** replace a professional human security audit — especially for',
+    '> **not** replace a professional human security audit - especially for',
     '> cryptographic or funds-handling code.',
   ].join('\n');
 
   const md = tpl
-    .replace('{{TITLE}}', `${name} — Private Security Audit`)
+    .replace('{{TITLE}}', `${name} - Private Security Audit`)
     .replace('{{DATE}}', date)
     .replace('{{INTRO}}', intro)
     .replace('{{SUMMARY}}', renderSummary(findings, groups, scannerStatus))

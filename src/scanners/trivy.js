@@ -33,7 +33,7 @@ function run(targetPath, opts = {}) {
         tool: 'trivy',
         severity: normSeverity(m.Severity),
         category: 'Configuration',
-        title: `${m.ID || 'config'} — ${m.Title || 'misconfiguration'}`,
+        title: `${m.ID || 'config'} - ${m.Title || 'misconfiguration'}`,
         detail: (m.Description || m.Message || '').slice(0, 500),
         file: target ? path.normalize(target) : null,
         line: (m.CauseMetadata && m.CauseMetadata.StartLine) || null,

@@ -26,7 +26,7 @@ function parseNpmAudit(json, targetPath) {
       tool: 'npm-audit',
       severity: normSeverity(v.severity),
       category: 'Dependency vulnerability',
-      title: `${name} — ${v.severity || 'unknown'} severity`,
+      title: `${name} - ${v.severity || 'unknown'} severity`,
       detail: Array.isArray(v.via)
         ? v.via.map((x) => (typeof x === 'string' ? x : x.title)).filter(Boolean).join('; ')
         : String(v.via || ''),
@@ -59,7 +59,7 @@ function run(targetPath, opts = {}) {
               (vuln.severity && vuln.severity[0] && vuln.severity[0].type)
             ),
             category: 'Dependency vulnerability',
-            title: `${pkg.name || 'package'} — ${vuln.id || 'advisory'}`,
+            title: `${pkg.name || 'package'} - ${vuln.id || 'advisory'}`,
             detail: (vuln.summary || vuln.details || '').slice(0, 500),
             file: source.path ? path.normalize(source.path) : null,
             line: null,

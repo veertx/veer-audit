@@ -7,7 +7,7 @@ SUMMARY, FINDINGS, SCOPE_NOTE.
 -->
 # {{TITLE}}
 
-_Generated {{DATE}} by veer-audit — local-first automated security audit._
+_Generated {{DATE}} by veer-audit - local-first automated security audit._
 
 {{INTRO}}
 
