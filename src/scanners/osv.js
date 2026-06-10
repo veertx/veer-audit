@@ -40,7 +40,9 @@ function parseNpmAudit(json, targetPath) {
 function run(targetPath, opts = {}) {
   // Primary: osv-scanner.
   const osvArgs = ['--format', 'json', '-r', targetPath];
-  const res = runJson('osv-scanner', osvArgs);
+  // osv-scanner exits 1 when it FINDS vulnerabilities — that is a successful scan,
+  // not a failure. Allow non-zero exit and parse its stdout JSON regardless.
+  const res = runJson('osv-scanner', osvArgs, { allowNonZeroExit: true });
 
   if (res.ok) {
     const findings = [];
