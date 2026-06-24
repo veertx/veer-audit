@@ -38,6 +38,17 @@ function parseNpmAudit(json, targetPath) {
 }
 
 function run(targetPath, opts = {}) {
+  // Exclude findings whose source path falls under an excluded directory.
+  // opts.exclude was previously accepted but never applied, so osv-scanner's
+  // recursive walk reported lockfiles in excluded dirs (e.g. x402). Segment
+  // match, NOT substring, so "x402" only matches a real x402 path segment.
+  const exclude = opts.exclude || [];
+  const isExcluded = (p) => {
+    if (!p) return false;
+    const segs = path.normalize(p).split(/[\\/]+/);
+    return exclude.some((ex) => segs.includes(ex));
+  };
+
   // Primary: osv-scanner.
   const osvArgs = ['--format', 'json', '-r', targetPath];
   // osv-scanner exits 1 when it FINDS vulnerabilities — that is a successful scan,
@@ -49,6 +60,7 @@ function run(targetPath, opts = {}) {
     const results = (res.json && res.json.results) || [];
     for (const pkgResult of results) {
       const source = pkgResult.source || {};
+      if (isExcluded(source.path)) continue; // skip excluded dirs (e.g. x402)
       for (const p of pkgResult.packages || []) {
         const pkg = p.package || {};
         for (const vuln of p.vulnerabilities || []) {
@@ -73,7 +85,7 @@ function run(targetPath, opts = {}) {
   // Fallback: npm audit (ships with Node). Run inside the target dir.
   const auditRes = runJson('npm', ['audit', '--json'], { cwd: targetPath, allowNonZeroExit: true });
   if (auditRes.ok) {
-    const findings = parseNpmAudit(auditRes.json, targetPath);
+    const findings = parseNpmAudit(auditRes.json, targetPath).filter((f) => !isExcluded(f.file));
     return {
       ok: true,
       skipped: false,
