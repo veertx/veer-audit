@@ -9,6 +9,9 @@ reports/
 config/target.json
 config/triage.json
 
+# Internal notes — keep local, never commit to the public repo.
+MEMORY.md
+
 # Keep the directory placeholders.
 !results/.gitkeep
 !reports/.gitkeep
